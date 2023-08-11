@@ -1,0 +1,61 @@
+body {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  color: gainsboro;
+  background-color:cadetblue;
+}
+
+.cabecera {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.score-left {
+  padding-right: 15px;
+  border-right: 1px solid black;
+  font-size: 34px;
+}
+
+.score-right {
+  padding-left: 15px;
+  font-size: 34px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-around {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+
+.user-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.img-action {
+  margin-bottom: 3rem;
+  border-radius: 100px;
+}
+
+.user-actions img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.win-lose {
+  margin-bottom: 3rem;
+  border-radius: 100px;
+}
+
+.d-none {
+  display: none;
+}

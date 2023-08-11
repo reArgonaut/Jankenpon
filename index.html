@@ -1,0 +1,195 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piedra, papel o tijeras</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="cabecera">
+    <h1>
+      Piedra, papel o tijeras
+    </h1>
+  </header>
+  <main>
+    <h2 class="flex-center">
+      SCORE
+    </h2>
+    <!-- Seccion para el marcador del juego -->
+    <section>
+      <div class="flex-center">
+        <h3 class="score-left" id="user-score">
+        </h3>
+        <h3 class="score-right" id="machine-score">
+        </h3>
+      </div>
+      <div class="flex-center" style="margin: 3rem;" id="text-fight"></div>
+    </section>
+
+    <!-- Seccion para seleccion de piedra, papel o tijeras -->
+    <section class="flex-around">
+      <div class="user-actions">
+        <img style="cursor: pointer;" onclick="ataque(0)" id="Piedra" title="Piedra" class="img-action" height="300"
+          width="300" src="https://media.tenor.com/nYFAYFxMzYYAAAAC/star-trek-stone.gif" alt="Piedra">
+        <img style="cursor: pointer;" onclick="ataque(1)" id="Papel" title="Papel" class="img-action" height="300"
+          width="300" src="https://i.pinimg.com/originals/04/90/c2/0490c28b2d33d0ae40f823e53f6a2c15.gif" alt="Papel">
+        <img style="cursor: pointer;" onclick="ataque(2)" id="Tijeras" title="Tijeras" class="img-action" height="300"
+          width="300"
+          src="https://media.taringa.net/knn/crop:1260x800/Z3M6Ly9rbjMvdGFyaW5nYS9EL0MvNS8zLzQvMS9HYWxsaW5hU295WW8vQzNGLmdpZg"
+          alt="Tijeras">
+      </div>
+      <div>
+        <img id="lose" class="win-lose d-none" width="300" height="300"
+          src="https://media.tenor.com/kQLMD3o-8nIAAAAd/cell-death.gif" alt="">
+        <img id="win" class="win-lose d-none" width="300" height="300"
+          src="https://media.tenor.com/WOkK--nRNYMAAAAS/doomguy-doom-slayer.gif" alt="">
+        <img id="draw" class="win-lose d-none" width="300" height="300"
+          src="https://media.tenor.com/TrTOyjOWDxgAAAAC/john-travolta-searching.gif" alt="">
+      </div>
+      <div class="user-actions">
+        <img id="Piedra" title="Piedra" class="img-action" height="300" width="300"
+          src="https://media.tenor.com/nYFAYFxMzYYAAAAC/star-trek-stone.gif" alt="Piedra">
+        <img id="Papel" title="Papel" class="img-action" height="300" width="300"
+          src="https://i.pinimg.com/originals/04/90/c2/0490c28b2d33d0ae40f823e53f6a2c15.gif" alt="Papel">
+        <img id="Tijeras" title="Tijeras" class="img-action" height="300" width="300"
+          src="https://media.taringa.net/knn/crop:1260x800/Z3M6Ly9rbjMvdGFyaW5nYS9EL0MvNS8zLzQvMS9HYWxsaW5hU295WW8vQzNGLmdpZg"
+          alt="Tijeras">
+      </div>
+    </section>
+  </main>
+  <script>
+    //var opciones = ["piedra", "papel", "tijera"];
+    var opciones = [0, 1, 2];
+    var eleccionMaquina;
+    var victoriaUsuario = 0;
+    var victoriaMaquina = 0;
+
+    //Render inicial del score
+    document.getElementById('user-score').innerHTML = victoriaUsuario;
+    document.getElementById('machine-score').innerHTML = victoriaMaquina;
+
+    function aleatorio(minimo, maximo) {
+      var numero = Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
+      return numero;
+    }
+
+    function ataque(eleccion) {
+      eleccionUsuario = eleccion
+      eleccionMaquina = aleatorio(0, 2)
+
+      if (eleccionUsuario == 0) {//el usuario eligio piedra 
+        if (opciones[eleccionMaquina] == 1) {//si la maquina eligio papel 
+          victoriaMaquina++
+          document.getElementById('text-fight').innerHTML ='<h1>¡Perdiste! </h1> <h3> La maquina eligio papel y tu piedra.</h3>';
+          document.getElementById('lose').classList.remove('d-none')
+          document.getElementById('text-fight').classList.remove('d-none')
+          document.getElementById('machine-score').innerHTML = victoriaMaquina;
+          setTimeout(() => {
+            document.getElementById('text-fight').classList.add('d-none')
+            document.getElementById('lose').classList.add('d-none')
+          }, 4000);
+        } else {
+          if (opciones[eleccionMaquina] == 2) {
+            victoriaUsuario++
+            document.getElementById('text-fight').innerHTML ='<h1>¡Ganaste! </h1> <h3> La maquina eligio tijera y tu piedra.</h3>';
+            document.getElementById('win').classList.remove('d-none')
+            document.getElementById('text-fight').classList.remove('d-none')
+            document.getElementById('user-score').innerHTML = victoriaUsuario;
+            setTimeout(() => {
+              document.getElementById('text-fight').classList.add('d-none')
+              document.getElementById('win').classList.add('d-none')
+            }, 4000);
+          } else {
+            if (opciones[eleccionMaquina] == 0) {
+              document.getElementById('text-fight').innerHTML ='<h1>¡Empate! </h1> <h3> Ambos eligieron piedra.</h3>';
+              document.getElementById('text-fight').classList.remove('d-none')
+              document.getElementById('draw').classList.remove('d-none')
+              setTimeout(() => {
+                document.getElementById('text-fight').classList.add('d-none')
+                document.getElementById('draw').classList.add('d-none')
+              }, 4000);
+            }
+          }
+        }
+      }
+
+      if (eleccionUsuario == 1) {//el usuario eligio papel 
+        if (opciones[eleccionMaquina] == 2) {
+          victoriaMaquina++
+          document.getElementById('text-fight').innerHTML ='<h1>¡Perdiste! </h1> <h3> La maquina eligio tijera y tu papel.</h3>';
+          document.getElementById('lose').classList.remove('d-none')
+          document.getElementById('text-fight').classList.remove('d-none')
+          document.getElementById('machine-score').innerHTML = victoriaMaquina;
+          setTimeout(() => {
+            document.getElementById('text-fight').classList.add('d-none')
+            document.getElementById('lose').classList.add('d-none')
+          }, 4000);
+        } else {
+          if (opciones[eleccionMaquina] == 0) {
+            victoriaUsuario++
+            document.getElementById('text-fight').innerHTML ='<h1>¡Ganaste! </h1> <h3> La maquina eligio piedra y tu papel.</h3>';
+            document.getElementById('win').classList.remove('d-none')
+            document.getElementById('text-fight').classList.remove('d-none')
+            document.getElementById('user-score').innerHTML = victoriaUsuario;
+            setTimeout(() => {
+              document.getElementById('text-fight').classList.add('d-none')
+              document.getElementById('win').classList.add('d-none')
+            }, 4000);
+          } else {
+            if (opciones[eleccionMaquina] == 1) {
+              document.getElementById('text-fight').innerHTML ='<h1>¡Empate! </h1> <h3> Ambos eligieron papel.</h3>';
+              document.getElementById('text-fight').classList.remove('d-none')
+              document.getElementById('draw').classList.remove('d-none')
+              setTimeout(() => {
+                document.getElementById('text-fight').classList.add('d-none')
+                document.getElementById('draw').classList.add('d-none')
+              }, 4000);
+            }
+          }
+        }
+      }
+
+      if (eleccionUsuario == 2) {//el usuario eligio tijera 
+        if (opciones[eleccionMaquina] == 1) {
+          victoriaUsuario++
+          document.getElementById('text-fight').innerHTML ='<h1>¡Ganaste! </h1> <h3> La maquina eligio papel y tu tijera.</h3>';
+          document.getElementById('win').classList.remove('d-none')
+          document.getElementById('text-fight').classList.remove('d-none')
+          document.getElementById('user-score').innerHTML = victoriaUsuario;
+          setTimeout(() => {
+            document.getElementById('text-fight').classList.add('d-none')
+            document.getElementById('win').classList.add('d-none')
+          }, 4000);
+        } else {
+          if (opciones[eleccionMaquina] == 0) {
+            victoriaMaquina++
+            document.getElementById('text-fight').innerHTML ='<h1>¡Perdiste! </h1> <h3> La maquina eligio piedra y tu tijera.</h3>'; 
+            document.getElementById('lose').classList.remove('d-none')
+            document.getElementById('text-fight').classList.remove('d-none')
+            document.getElementById('machine-score').innerHTML = victoriaMaquina;
+            setTimeout(() => {
+              document.getElementById('text-fight').classList.add('d-none')
+              document.getElementById('lose').classList.add('d-none')
+            }, 4000);
+          } else {
+            if (opciones[eleccionMaquina] == 2) {
+              document.getElementById('text-fight').innerHTML ='<h1>¡Empate! </h1> <h3> Ambos eligieron tijera.</h3>';
+              document.getElementById('text-fight').classList.remove('d-none')
+              document.getElementById('draw').classList.remove('d-none')
+              setTimeout(() => {
+                document.getElementById('text-fight').classList.add('d-none')
+                document.getElementById('draw').classList.add('d-none')
+              }, 4000);
+            }
+          }
+        }
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
